@@ -48,6 +48,8 @@ input_data = np.array([[age, annual_income, monthly_inhand_salary, num_bank_acco
                         monthly_balance, total_num_accounts, debt_per_account, debt_to_income_ratio,
                         delayed_payments_per_account, total_monthly_expenses]])
 
+input_data = input_data.reshape(1, -1)  # Reshaping for a single sample input
+
 # When the user clicks 'Predict'
 if st.button('Predict Credit Score'):
     prediction = model.predict(input_data)  # Replace with your prediction logic
