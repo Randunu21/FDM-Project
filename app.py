@@ -49,7 +49,7 @@ if page == "Predict Manually":
     payment_of_min_amount = {'yes': 2, 'no': 1, 'NM': 0}[payment_of_min_amount]
 
     outstanding_debt = st.number_input('Outstanding Debt (in USD)', min_value=0.0, format="%.2f")
-    credit_history_age = st.number_input('Credit History Age (years)', min_value=0, step=1)
+    credit_history_age = st.number_input('Credit History Age (Months)', min_value=0, step=1)
 
     total_num_accounts = num_bank_accounts + num_credit_card
 
