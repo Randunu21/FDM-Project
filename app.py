@@ -3,8 +3,6 @@ import numpy as np
 import pandas as pd
 import pickle
 from sklearn.preprocessing import OrdinalEncoder, LabelEncoder
-import shap
-import matplotlib.pyplot as plt
 
 
 # Load the trained model and scaler
@@ -80,33 +78,6 @@ if page == "Predict Manually":
         prediction = model.predict(final_input)
         credit_score_mapping = {0: 'Poor', 1: 'Standard', 2: 'Good'}
         st.success(f'Predicted Credit Score: {credit_score_mapping.get(prediction[0], "Unknown")}')
-
-    # Calculate SHAP values
-    explainer = shap.TreeExplainer(model)  # Use TreeExplainer for Random Forest
-    shap_values = explainer(final_input)
-
- 
-    # Ensure feature names match the number of features in final_input
-    feature_names = [
-        'Annual_Income', 'Interest_Rate', 'Num_of_Loan', 'Delay_from_due_date', 'Num_of_Delayed_Payment', 
-        'Num_Credit_Inquiries', 'Credit_Mix', 'Outstanding_Debt', 'Credit_History_Age', 
-        'Payment_of_Min_Amount'] + occupation_list + ['Total_Num_Accounts']
-
-    # Ensure the length of feature_names matches the number of columns in final_input
-    st.write(f"Number of features: {len(feature_names)}")
-    class_names = {0: 'Poor', 1: 'Standard', 2: 'Good'}
-
-    class_names = {0: 'Poor', 1: 'Standard', 2: 'Good'}
-
-    # Plot SHAP values for each class with custom class names
-    for i in range(shap_values.shape[2]):  # Loop through classes
-        class_name = class_names.get(i, f"Class {i}")  # Get class name from the dictionary
-        st.subheader(f"SHAP values for {class_name}")  # Update the plot header with class name
-        
-        # Create a new figure for each SHAP plot
-        fig, ax = plt.subplots()  
-        shap.summary_plot(shap_values[..., i], final_input, feature_names=feature_names, show=False)
-        st.pyplot(fig)  # Pass the figure to Streamlit's pyplot
 
 
 elif page == "Batch Prediction":
